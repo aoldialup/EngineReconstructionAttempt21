@@ -6,6 +6,10 @@ namespace EngineReconstructionAttempt20
 {
     abstract class Scene
     {
+        public const int NO_SCENE = -1;
+
+        public int nextScene = NO_SCENE;
+
         public abstract void OnCreate();
         public abstract void OnDestroy();
 

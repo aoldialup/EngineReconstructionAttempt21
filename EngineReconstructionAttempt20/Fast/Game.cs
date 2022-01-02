@@ -14,30 +14,32 @@ namespace EngineReconstructionAttempt20
         private float deltaTime;
 
         private SceneManager sceneManager;
-
-        private GameObject player;
+        private SpriteAllocator spriteAllocator;
 
         public Game()
         {
+            Init();
+
             sceneManager = new SceneManager();
+            spriteAllocator = new SpriteAllocator();
 
-            player = new GameObject();
+            SplashScreenScene screen = new SplashScreenScene(sceneManager, window, spriteAllocator);
+            screen.nextScene = Scene.NO_SCENE;
 
+            sceneManager.Add(screen);
 
-
-
-
-            SplashScreenScene splashScreen = new SplashScreenScene();
-            int id = sceneManager.Add(splashScreen);
+            int id = sceneManager.Add(screen);
 
             sceneManager.SwitchTo(id);
+            
+        }
 
+        private void Init()
+        {
+            window = new Window("Game");
+            
             clock = new Clock();
             input = new Input();
-
-            window = new Window("Game");
-
-            deltaTime = clock.Restart().AsSeconds();
         }
 
         public void Run()
@@ -55,22 +57,11 @@ namespace EngineReconstructionAttempt20
         private void CaptureInput()
         {
             sceneManager.ProcessInput();
-            //input.Update();
         }
 
         private void Update()
         {
             window.Update();
-            /*
-            if (input.IsKeyDown(Key.A))
-            {
-                Console.WriteLine("A");
-            }
-            }
-            }
-            */
-
-
             sceneManager.Update(deltaTime);
         }
 
@@ -82,10 +73,7 @@ namespace EngineReconstructionAttempt20
         private void Draw()
         {
             window.BeginDraw();
-
-            //window.Draw(sprite);
             sceneManager.Draw(window);
-
             window.EndDraw();
         }
 

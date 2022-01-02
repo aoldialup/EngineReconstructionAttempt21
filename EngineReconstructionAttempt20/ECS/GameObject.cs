@@ -4,9 +4,10 @@ namespace EngineReconstructionAttempt20
 {
     class GameObject
     {
-        // Awake is called when object created. Use to ensure 
-        // required components are present.
-        // 
+        private List<Component> components = new List<Component>();
+
+        public TransformComponent transform { get; set; }
+        public bool isQueuedForRemoval { get; set; }
 
         public void Awake()
         {
@@ -16,7 +17,6 @@ namespace EngineReconstructionAttempt20
             }
         }
 
-        // Start is called after Awake method. Use to initialise variables.
         public void Start()
         {
             for (int i = components.Count - 1; i >= 0; i--)
@@ -49,19 +49,17 @@ namespace EngineReconstructionAttempt20
             }
         }
 
-        private List<Component> components = new List<Component>();
-
-        public Component GetComponent(Component component)
+        public Component GetComponent<T>()
         {
             foreach (Component c in components)
             {
-                if (component.GetType().IsSubclassOf(c.GetType()))
+                if (typeof(T) == c.GetType())
                 {
                     return c;
                 }
             }
 
-            return default(Component);
+            return null;
         }
 
         public void AddComponent(Component componentType)
@@ -76,6 +74,20 @@ namespace EngineReconstructionAttempt20
 
             componentType.gameObject = this;
             components.Add(componentType);
+        }
+
+        public void RemoveComponent<T>()
+        {
+            for(int i = 0; i < components.Count; i++)
+            {
+                if(typeof(T) == components[i].GetType())
+                {
+                    components[i].gameObject = null;
+                    components.RemoveAt(i);
+
+                    break;
+                }
+            }
         }
     }
 }

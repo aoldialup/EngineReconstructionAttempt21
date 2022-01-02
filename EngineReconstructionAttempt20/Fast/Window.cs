@@ -18,7 +18,6 @@ namespace EngineReconstructionAttempt20
         private void Window_Closed(object sender, System.EventArgs e)
         {
             RenderWindow window = sender as RenderWindow;
-
             window.Close();
         }
 

@@ -6,6 +6,6 @@ namespace EngineReconstructionAttempt20
 {
     class WorkingDirectory
     {
-        public const string DIRECTORY = "./res/";
+        public const string CURRENT = "./res/";
     }
 }

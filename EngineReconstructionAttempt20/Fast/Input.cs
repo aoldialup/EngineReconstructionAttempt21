@@ -1,9 +1,4 @@
-﻿using EngineReconstructionAttempt20;
-using SFML.Graphics;
-using SFML.Window;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SFML.Window;
 
 using static SFML.Window.Keyboard;
 
