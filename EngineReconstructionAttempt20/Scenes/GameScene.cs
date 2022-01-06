@@ -8,7 +8,7 @@ namespace EngineReconstructionAttempt20
     {
         private Texture splashTexture;
         private Sprite splashSprite;
-        
+
         private SceneManager sceneManager;
         private Window window;
         private TextureAllocator textureAllocator;
@@ -22,7 +22,7 @@ namespace EngineReconstructionAttempt20
         public GameScene(
                                 Input input,
                                 SceneManager sceneManager,
-                                Window window, 
+                                Window window,
                                 TextureAllocator textureAllocator,
                                 GameObjectCollection gameObjectCollection)
         {
@@ -40,7 +40,7 @@ namespace EngineReconstructionAttempt20
             Vector2f position = new Vector2f(0f, 0f);
             int counter = 0;
 
-            for(int i = 0; i < 20000; i++)
+            for (int i = 0; i < 20000; i++)
             {
 
                 GameObject player = new GameObject();
@@ -59,7 +59,7 @@ namespace EngineReconstructionAttempt20
 
                 player.transform.position = position;
 
-                if(counter == 10)
+                if (counter == 10)
                 {
                     position = new Vector2f(0f, position.Y + 30f);
                     counter = 0;
