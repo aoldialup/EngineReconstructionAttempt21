@@ -10,7 +10,6 @@ namespace EngineReconstructionAttempt20
         private bool[] lastFrameKeysPressed;
 
         public const int KEY_COUNT = (int)Key.KeyCount;
-
         public Input()
         {
             thisFrameKeysPressed = new bool[KEY_COUNT];

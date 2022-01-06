@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace EngineReconstructionAttempt20
 {
@@ -7,7 +8,13 @@ namespace EngineReconstructionAttempt20
         private List<Component> components = new List<Component>();
 
         public TransformComponent transform { get; set; }
-        public bool isQueuedForRemoval { get; set; }
+        public bool isQueuedForRemoval { get; set; } = false;
+
+        public GameObject()
+        {
+            AddComponent(new TransformComponent());
+            transform = GetComponent<TransformComponent>() as TransformComponent;
+        }
 
         public void Awake()
         {
@@ -64,16 +71,23 @@ namespace EngineReconstructionAttempt20
 
         public void AddComponent(Component componentType)
         {
+            Debug.Assert(!HasComponent(componentType));
+
+            componentType.gameObject = this;
+            components.Add(componentType);
+        }
+
+        public bool HasComponent(Component componentType)
+        {
             foreach (Component c in components)
             {
                 if (c.GetType() == componentType.GetType())
                 {
-                    return;
+                    return true;
                 }
             }
 
-            componentType.gameObject = this;
-            components.Add(componentType);
+            return false;
         }
 
         public void RemoveComponent<T>()

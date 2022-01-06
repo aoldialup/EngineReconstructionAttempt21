@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.Window;
+using SFML.System;
 
 namespace EngineReconstructionAttempt20
 {
@@ -39,6 +40,14 @@ namespace EngineReconstructionAttempt20
         public void EndDraw()
         {
             window.Display();
+        }
+
+        public Vector2u center
+        {
+            get
+            {
+                return new Vector2u(window.Size.X / 2, window.Size.Y / 2);
+            }
         }
 
         public bool IsOpen()

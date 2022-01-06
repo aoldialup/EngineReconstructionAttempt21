@@ -1,39 +1,58 @@
-﻿using SFML.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EngineReconstructionAttempt20
 {
     abstract class ResourceAllocator<T>
     {
-        protected Dictionary<int, T> resources;
-        protected int currentID = 0;
+        public int NO_ID = -1;
 
-        public abstract int Add(string filepath);
+        protected Dictionary<string, ResourceData<T>> resources;
+        protected int currentID = 0;
 
         public ResourceAllocator()
         {
-            resources = new Dictionary<int, T>();
+            resources = new Dictionary<string, ResourceData<T>>();
+        }
+
+        public abstract void Add(string filepath);
+
+        protected int GetEquivalentResourceID(string filepath)
+        {
+            if (resources.ContainsKey(filepath))
+            {
+                return resources[filepath].id;
+            }
+
+            return NO_ID;
         }
 
         public T Get(int id)
         {
-            return resources[id];
+            foreach (var resource in resources)
+            {
+                if (resource.Value.id == id)
+                {
+                    return resource.Value.data;
+                }
+            }
+
+            return default(T);
+        }
+
+        public int Get(string filepath)
+        {
+            return resources[filepath].id;
         }
 
         public void Remove(int id)
         {
-            resources.Remove(id);
-        }
-    }
-
-    class TextureAllocator : ResourceAllocator<Texture>
-    {
-        public override int Add(string filepath)
-        {
-            Texture texture = new Texture(filepath);
-            resources.Add(currentID, texture);
-
-            return currentID++;
+            foreach (var resource in resources)
+            {
+                if (resource.Value.id == id)
+                {
+                    resources.Remove(resource.Key);
+                }
+            }
         }
     }
 }

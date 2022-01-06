@@ -7,6 +7,12 @@ namespace EngineReconstructionAttempt20
         private List<GameObject> gameObjects;
         private List<GameObject> newObjects;
 
+        public GameObjectCollection()
+        {
+            gameObjects = new List<GameObject>();
+            newObjects = new List<GameObject>();
+        }
+
         public void Add(GameObject gameObject)
         {
             newObjects.Add(gameObject);
@@ -14,25 +20,25 @@ namespace EngineReconstructionAttempt20
 
         public void Update(float deltaTime)
         {
-            for (int i = 0; i < gameObjects.Count; i++)
+            foreach(GameObject g in gameObjects)
             {
-                gameObjects[i].Update(deltaTime);
+                g.Update(deltaTime);
             }
         }
 
         public void LateUpdate(float deltaTime)
         {
-            for (int i = 0; i < gameObjects.Count; i++)
+            foreach(GameObject g in gameObjects)
             {
-                gameObjects[i].LateUpdate(deltaTime);
+                g.LateUpdate(deltaTime);
             }
         }
 
         public void Draw(Window window)
         {
-            for (int i = 0; i < gameObjects.Count; i++)
+            foreach(GameObject g in gameObjects)
             {
-                gameObjects[i].Draw(window);
+                g.Draw(window);
             }
         }
 
@@ -55,13 +61,20 @@ namespace EngineReconstructionAttempt20
                     gameObjects.Add(newObjects[i]);
                 }
 
-                gameObjects.Clear();
+                newObjects.Clear();
             }
         }
 
         public void ProcessRemovals()
         {
-
+            for(int i = 0; i < gameObjects.Count; i++)
+            {
+                if (gameObjects[i].isQueuedForRemoval)
+                {
+                    gameObjects.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
 }

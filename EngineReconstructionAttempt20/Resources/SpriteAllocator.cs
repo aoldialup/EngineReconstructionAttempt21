@@ -4,12 +4,19 @@ namespace EngineReconstructionAttempt20
 {
     class SpriteAllocator : ResourceAllocator<Sprite>
     {
-        public override int Add(string filepath)
+        public override void Add(string filepath)
         {
-            Sprite s = new Sprite(new Texture(WorkingDirectory.CURRENT + filepath));
-            resources.Add(currentID, s);
+            int createdID = GetEquivalentResourceID(filepath);
 
-            return currentID++;
+            if(createdID == NO_ID)
+            {
+                createdID = currentID;
+
+                Sprite s = new Sprite(new Texture(filepath));
+                resources.Add(filepath, new ResourceData<Sprite>(createdID, s));
+
+                currentID++;
+            }
         }
     }
 }

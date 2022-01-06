@@ -6,32 +6,35 @@ namespace EngineReconstructionAttempt20
     class Game
     {
         private Window window;
-        private Sprite sprite;
-
         private Input input;
-
         private Clock clock;
+
         private float deltaTime;
 
         private SceneManager sceneManager;
         private SpriteAllocator spriteAllocator;
+        private TextureAllocator textureAllocator;
+        private GameObjectCollection gameObjectCollection;
 
         public Game()
         {
             Init();
 
-            sceneManager = new SceneManager();
-            spriteAllocator = new SpriteAllocator();
+            GameScene screen = new GameScene(
+                input,
+                sceneManager,
+                window,
+                textureAllocator, 
+                gameObjectCollection  
+                );
 
-            SplashScreenScene screen = new SplashScreenScene(sceneManager, window, spriteAllocator);
             screen.nextScene = Scene.NO_SCENE;
 
             sceneManager.Add(screen);
 
             int id = sceneManager.Add(screen);
 
-            sceneManager.SwitchTo(id);
-            
+            sceneManager.SwitchTo(id);    
         }
 
         private void Init()
@@ -40,6 +43,12 @@ namespace EngineReconstructionAttempt20
             
             clock = new Clock();
             input = new Input();
+
+            sceneManager = new SceneManager();
+            gameObjectCollection = new GameObjectCollection();
+
+            spriteAllocator = new SpriteAllocator();
+            textureAllocator = new TextureAllocator();
         }
 
         public void Run()
